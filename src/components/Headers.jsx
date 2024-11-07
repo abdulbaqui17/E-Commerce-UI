@@ -44,7 +44,7 @@ export const Headers = () => {
                                 </Link>
                                 {/* Link to Home for Abdul text */}
                                 <Link to="/" className="hidden sm:inline text-2xl font-bold">
-                                    Abdul
+                                    TrustView
                                 </Link>
                             </div>
                         </div>
