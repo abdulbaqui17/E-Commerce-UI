@@ -10,6 +10,7 @@ import blackimage from "../assets/blackimage.jpg";
 import tv from "../assets/tv.jpeg";
 import blackwathc from "../assets/blackwathc.jpeg";
 import { BackgroundGradient } from "./BackgroundGradient";
+import { motion } from "framer-motion";
 
 export const CategoryList = () => {
   const categories = [
@@ -26,31 +27,80 @@ export const CategoryList = () => {
     { src: blackimage, name: "Speakers" },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center pt-10  bg-black text-white">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex justify-center items-center pt-10 bg-black text-white"
+    >
       <div className="container mx-auto px-8 md:px-36">
-        <div className="flex items-center gap-3 md:gap-16  justify-between overflow-auto scrollbar-none">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex items-center gap-3 md:gap-16 justify-between overflow-auto scrollbar-none"
+        >
           {categories.map((category, index) => (
-            <BackgroundGradient
+            <motion.div
               key={index}
-              className="rounded-full max-w-sm p-2 bg-black dark:bg-zinc-900 transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+              variants={itemVariants}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <div className="cursor-pointer text-center">
-                <div className="w-24 h-16 rounded-full overflow-hidden  flex items-center justify-center transition-transform duration-300 hover:scale-110">
-                  <img
-                    src={category.src}
-                    alt={category.name}
-                    className="h-full object-scale-down"
-                  />
-                </div>
-                <p className="text-center text-sm md:text-base capitalize mt-2 transition-colors duration-300 ">
-                  {category.name}
-                </p>
-              </div>
-            </BackgroundGradient>
+              <BackgroundGradient
+                className="rounded-full max-w-sm p-2 bg-black dark:bg-zinc-900"
+              >
+                <motion.div 
+                  className="cursor-pointer text-center"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <motion.div 
+                    className="w-24 h-16 rounded-full overflow-hidden flex items-center justify-center"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <motion.img
+                      src={category.src}
+                      alt={category.name}
+                      className="h-full object-scale-down"
+                      whileHover={{ scale: 1.2 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
+                  <motion.p 
+                    className="text-center text-sm md:text-base capitalize mt-2"
+                    whileHover={{ color: "#8B5CF6" }}
+                  >
+                    {category.name}
+                  </motion.p>
+                </motion.div>
+              </BackgroundGradient>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };

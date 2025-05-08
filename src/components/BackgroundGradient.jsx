@@ -16,8 +16,26 @@ export const BackgroundGradient = ({
       backgroundPosition: ["0, 50%", "100% 50%", "0 50%"],
     },
   };
+
+  const containerVariants = {
+    initial: { scale: 1 },
+    hover: { 
+      scale: 1.02,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 10
+      }
+    }
+  };
+
   return (
-    (<div className={cn("relative p-[2px] group", containerClassName)}>
+    <motion.div 
+      className={cn("relative p-[2px] group", containerClassName)}
+      variants={containerVariants}
+      initial="initial"
+      whileHover="hover"
+    >
       <motion.div
         variants={animate ? variants : undefined}
         initial={animate ? "initial" : undefined}
@@ -36,8 +54,9 @@ export const BackgroundGradient = ({
         }}
         className={cn(
           "absolute inset-0 rounded-full z-[1] opacity-60 group-hover:opacity-100 transition duration-500 will-change-transform",
-          " bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
-        )} />
+          "bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+        )} 
+      />
       <motion.div
         variants={animate ? variants : undefined}
         initial={animate ? "initial" : undefined}
@@ -57,8 +76,15 @@ export const BackgroundGradient = ({
         className={cn(
           "absolute inset-0 rounded-full z-[1] will-change-transform",
           "bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
-        )} />
-      <div className={cn("relative z-10", className)}>{children}</div>
-    </div>)
+        )} 
+      />
+      <motion.div 
+        className={cn("relative z-10", className)}
+        whileHover={{ scale: 1.02 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      >
+        {children}
+      </motion.div>
+    </motion.div>
   );
 };
